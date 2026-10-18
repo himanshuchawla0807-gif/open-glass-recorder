@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-18",
+  "unitTests": 13,
+  "syntaxChecks": "passed",
+  "browser": "Chromium via Playwright CLI",
+  "renderer": {
+    "webgl2": true,
+    "textureSize": [
+      2048,
+      1366
+    ]
+  },
+  "wallpapers": "All three loaded and were screenshot-checked",
+  "permissionDenial": "Useful error shown; control returns to idle",
+  "audio": {
+    "syntheticSignalHz": 440,
+    "playbackTimeAdvancedSeconds": 0.162743,
+    "streamReleased": true,
+    "downloadFilename": "voice-note-1.webm"
+  },
+  "recordingsClear": "passed",
+  "mobile": {
+    "viewport": [
+      390,
+      844
+    ],
+    "horizontalOverflow": false,
+    "buttonWidth": 99.265625
+  },
+  "pendingPermissionDestroy": "Late stream tracks stopped",
+  "backdropClearing": "passed",
+  "javascriptErrors": [],
+  "physicalMicrophoneRecorded": false,
+  "limitations": [
+    "No physical microphone was tested",
+    "No all-browser or all-device equivalence claim",
+    "Full branch coverage is not measured"
+  ]
+}
