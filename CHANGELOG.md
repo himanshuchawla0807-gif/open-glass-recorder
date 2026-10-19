@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.0.1.2] - 2026-10-19
+
+### Changed
+
+- Default demo restores the approved reference rendering, including circular surround, inner lens and reactive recording animation.
+- Preserved the independent MIT demo at independent.html, alongside its lab and composer example.
+- Added the approved inline chat example with navy gradient and transparent glass.
+- Documented third-party provenance and excluded recovered renderer files from our MIT grant.
+- Restored recorder click targets keep a constant diameter while recording.
+
+
 ## [0.0.1.1] - 2026-10-19
 
 ### Added

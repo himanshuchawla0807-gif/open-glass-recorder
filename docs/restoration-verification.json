@@ -1,0 +1,25 @@
+{
+  "renderer": "Restored earlier local recovered renderer; independent GitHub renderer unchanged",
+  "desktop": {
+    "demo": {
+      "idleDiameter": 205,
+      "recordingDiameter": 205
+    },
+    "chat": {
+      "idleDiameter": 100,
+      "recordingDiameter": 100
+    }
+  },
+  "mobile": {
+    "demoOverflow": false,
+    "chatOverflow": false
+  },
+  "syntheticRecordingAndPlayback": "passed on both pages",
+  "permissionDenialRecovery": "passed on both pages",
+  "pageErrors": [],
+  "referenceEvidence": "outputs/rea-engine-evidence.json",
+  "releasePackageVerifiedAt": "http://localhost:8770/",
+  "rapidRestartGuard": true,
+  "latePermissionReleased": true,
+  "transparentEmbedding": true
+}

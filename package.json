@@ -1,10 +1,10 @@
 {
   "name": "open-glass-recorder",
-  "version": "0.0.1.1",
+  "version": "0.0.1.2",
   "private": true,
   "type": "module",
-  "description": "An independently written, dependency-free liquid glass voice recorder.",
-  "license": "MIT",
+  "description": "Liquid glass recorder experiment: recovered reference rendering and a separate independent MIT implementation.",
+  "license": "SEE LICENSE IN LICENSE",
   "scripts": {
     "start": "node server.mjs",
     "test": "node --test test/*.test.mjs",

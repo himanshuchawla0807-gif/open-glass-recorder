@@ -1,0 +1,11 @@
+{
+  "source": "https://experiments.thisiswhitespace.com/liquid-glass-recorder",
+  "files": {
+    "vendor/reference-recorder/liquid-glass-recorder.js": "0c7aef442ed24ec932f33c074c777619be50483eb2f74f2f74401c68d49ab666",
+    "vendor/reference-recorder/chunks/panel-Cg4Jb1RY.js": "4f9c6b79c19f12a2b2bb80d68007a23ebccc2204c0fe4822468f8dcbf6b2aef8",
+    "vendor/reference-recorder/chunks/default-backdrop-B1BffJvo.js": "633c6f298f56b113a041b0a357a30fc895c16644ef08f00d905e292e0e1d86bc",
+    "vendor/reference-recorder/chunks/params-Bw-bnlK0.js": "9b418687f40fc4a3249b11abd7d21f5dbfb2a82eae8f56f625c4e343909ebbf6"
+  },
+  "reaSummaryEvidence": "ev_3b2aeac12701b7940dbf29f03187f66b0e74eb84e30f46dc8497a57c6db43bba",
+  "reaLimitation": "Static inventory is not proof of execution or a license grant."
+}

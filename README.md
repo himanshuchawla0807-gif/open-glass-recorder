@@ -1,35 +1,33 @@
 # Open Glass Recorder
 
-**Voice, in orbit.** An independently written liquid-glass voice recorder in vanilla JavaScript and WebGL2. No framework, package installation, cloud service or API key required.
+**Voice, in orbit.** A browser voice-recorder experiment with two clearly separated implementations:
 
-[Component lab](https://himanshuchawla0807-gif.github.io/open-glass-recorder/lab.html) · [Inline example](https://himanshuchawla0807-gif.github.io/open-glass-recorder/examples/composer.html) · [Try the demo](https://himanshuchawla0807-gif.github.io/open-glass-recorder/) · [How it was built](docs/RESEARCH.md) · [Component API](#use-the-component)
+- **Approved reference demo**: restores the earlier recovered rendering engine, circular glass surround, raised inner lens, pointer deformation and audio-reactive recording animation. The recovered engine has separate third-party rights; see [THIRD_PARTY.md](THIRD_PARTY.md).
+- **Independent MIT component**: the freshly written vanilla JavaScript/WebGL2 implementation remains available in `src/recorder.js`, the independent demo, lab and minimal composer example.
 
-![Open Glass over a blue nebula](docs/screenshots/desktop-blue-nebula.png)
+[Approved demo](https://himanshuchawla0807-gif.github.io/open-glass-recorder/) · [Chat example](https://himanshuchawla0807-gif.github.io/open-glass-recorder/examples/chat/) · [Independent demo](https://himanshuchawla0807-gif.github.io/open-glass-recorder/independent.html) · [Component lab](https://himanshuchawla0807-gif.github.io/open-glass-recorder/lab.html)
+
+![Approved glass recorder over a blue nebula](docs/screenshots/approved-demo.png)
 
 ## Why I built this
 
-I saw a liquid-glass voice recorder shared on Twitter/X. The original was sold as a paid component, and I wanted a free, reusable alternative. I used [REA](https://github.com/morluto/rea) to investigate the publicly delivered site, with help from Codex for implementation and Playwright for browser checks.
+I saw a liquid-glass voice recorder shared on Twitter/X. It was a paid component, and I wanted to explore how the effect worked and build a free alternative. I used [REA](https://github.com/morluto/rea) to investigate the publicly delivered site, with help from Codex and Playwright.
 
-That investigation started with a local recovery of the public build. This open-source repository takes a different step: the JavaScript, shaders, UI and recording lifecycle here were written fresh for this project. It does **not** distribute the original commercial bundle, its shaders, branding, fonts, payment links or assets. This is an independent interpretation of the interaction, not a pixel-identical copy or the original author's source code.
+The work produced a local recovery of the delivered renderer and a separate implementation written fresh. The earlier local rendering was preferred during visual review, so the default demo now exposes that reference rendering with new wallpaper, interface and integration code. The independent MIT alternative remains separately accessible. The reference renderer is not claimed as my original creation or relicensed as MIT.
 
-Inspiration: [Whitespace's Liquid Glass Recorder](https://experiments.thisiswhitespace.com/liquid-glass-recorder). No specific tweet URL was recorded. The inspiration reference is credit, not an affiliation or license for the original product.
+Inspiration and reference engine: [Whitespace's Liquid Glass Recorder](https://experiments.thisiswhitespace.com/liquid-glass-recorder). No specific tweet URL was recorded. No affiliation or endorsement is implied.
 
-## What it does
+## Approved demo and chat
 
-- A wider refractive glass pill expands while recording, keeping its button diameter fixed.
-- Spring motion, pointer attraction, chromatic fringes and microphone-reactive color.
-- Actual microphone capture, local playback and downloadable audio files.
-- Three landscape wallpapers supplied from my wallpaper collection.
-- Responsive layouts, keyboard-operable buttons, reduced-motion support and a CSS fallback when WebGL2 is unavailable.
-- Microphone tracks stop after recording; audio is never uploaded by this demo.
+The default demo restores the circular outer glass and raised mic lens. Recording expands the surround into a pill with a timer, stop control and audio-reactive glow. The clickable target remains the same diameter through the transition. The page uses three supplied space wallpapers and supports local recording, playback and downloads.
 
-Voice notes live in the current tab. Download anything you want to keep before closing it.
+The chat example embeds the same reference renderer directly into its composer with a navy gradient sampled inside the glass and transparency outside it. Chat replies are local, rule-based placeholders; there is no AI service, transcription or audio upload. Text history persists in browser storage. Audio lives only in the tab.
 
-## Component variants
+The full reference-renderer demo is source-available with **unverified application-specific reuse rights**, not an entirely MIT/open-source component. See [license boundaries](THIRD_PARTY.md). For MIT-licensed reusable code, use the independent implementation below.
 
-![Component lab](docs/screenshots/component-lab.png)
+## Independent component variants
 
-The lab has three functional variants plus live width, radius, gradient, tint, transparency and motion controls. Copy the configuration and use it in another view. Run `npm run lab` to serve it separately at http://localhost:8768. The main demo remains at http://localhost:8765.
+The independent lab has three functional variants and live width, radius, gradient, tint, transparency and motion controls. Copy its configuration for use with `GlassRecorder`. Run `npm run lab` to serve it at http://localhost:8768.
 
 ## Run locally
 
@@ -45,7 +43,7 @@ Open **http://localhost:8765**. If that port is busy: `PORT=8767 npm start`.
 
 Microphone capture requires HTTPS or localhost and a browser that supports MediaRecorder. The optical effect needs WebGL2; other browsers receive a CSS glass button.
 
-## Use the component
+## Use the independent MIT component
 
 ```html
 <div id="voice" style="width: 440px; height: 220px"></div>
@@ -113,7 +111,10 @@ Events: `statechange`, `recording`, `error`, `backdropchange`, `rendererfallback
 src/recorder.js   DOM, WebGL and recording lifecycle
 src/shaders.js    Original fullscreen optical shader
 src/math.js       Spring, timer and error helpers
-src/demo.js       Wallpaper selection, audio playback and downloads
+src/demo.js       Independent demo playback and wallpapers
+src/reference-demo.js  Approved reference-renderer integration
+vendor/reference-recorder/  Recovered third-party renderer; separate rights
+examples/chat/   Approved inline chat integration
 src/lab.js        Three working component variants
 src/lab-controls.js  Interactive inspector and config export
 src/lifecycle.js  Safe cleanup for cached/unloaded pages
@@ -132,4 +133,4 @@ See [TESTING.md](TESTING.md) for automated and browser verification, and [RESEAR
 
 ## License
 
-The independently written code is [MIT licensed](LICENSE). Wallpapers and screenshots depicting them are excluded from that software license; see [asset notices](assets/NOTICE.md). Swap in images you have permission to use when redistributing or deploying a derivative demo.
+Only the independently written code is [MIT licensed](LICENSE). Recovered files in `vendor/reference-recorder/` are excluded; see [THIRD_PARTY.md](THIRD_PARTY.md). Wallpapers and screenshots depicting them are excluded from that software license; see [asset notices](assets/NOTICE.md). Swap in images you have permission to use when redistributing or deploying a derivative demo.

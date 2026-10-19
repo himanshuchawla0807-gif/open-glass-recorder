@@ -1,3 +1,7 @@
+# Implementation scope update (0.0.1.2)
+
+The independent implementation findings below apply to src/recorder.js and its lab, composer and independent.html demo. The default page now uses a recovered third-party reference renderer in vendor/reference-recorder/, whose rights and modifications are documented in THIRD_PARTY.md. No originality or MIT-license claim below applies to that vendor directory.
+
 # REA-assisted investigation and independent implementation
 
 The starting reference was the public Liquid Glass Recorder page from Whitespace. Himanshu reported discovering it on Twitter/X. The original page advertised a paid component. The goal of this repository is a free open-source implementation of the interaction, not republication of that paid build.
