@@ -25,3 +25,9 @@ export function fitGeometry(width, height, { radius = 56, idleWidth = 168, recor
   const buttonDiameter = diameter * scale;
   return { scale, radius: buttonDiameter / 2, buttonDiameter, bodyWidth, extension: (bodyWidth - buttonDiameter) / 2, buttonOffset: (endWidth - diameter) * .5 * scale * amount };
 }
+
+/** Accept predictable CSS hex colors at the public configuration boundary. */
+export function parseColor(hex) {
+  if (typeof hex !== 'string' || !/^#[0-9a-f]{6}$/i.test(hex)) throw new TypeError('Colors must be six-digit hex values, such as #142f58.');
+  return [1,3,5].map(offset=>parseInt(hex.slice(offset,offset+2),16)/255);
+}

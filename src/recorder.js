@@ -1,8 +1,8 @@
-import { advanceSpring, formatTime, recordingError, fitGeometry } from './math.js';
+import { advanceSpring, formatTime, recordingError, fitGeometry, parseColor } from './math.js';
 import { vertex, fragment } from './shaders.js';
 
 const styles = `
-.open-glass{position:relative;width:100%;height:100%;min-height:100px;isolation:isolate;overflow:hidden;background:#101726;font-family:system-ui,sans-serif;color:white}
+.open-glass{position:relative;width:100%;height:100%;min-height:100px;isolation:isolate;overflow:hidden;background:linear-gradient(var(--og-top,#243d6b),var(--og-bottom,#060c1a));font-family:system-ui,sans-serif;color:white}
 .open-glass.transparent{background:transparent}
 .open-glass canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .og-action{position:absolute;top:50%;left:50%;display:grid;place-items:center;background:transparent;border:0;border-radius:50%;color:#fff;cursor:pointer;transform:translate(-50%,-50%);padding:0;-webkit-tap-highlight-color:transparent;filter:drop-shadow(0 2px 5px #0006)}
@@ -36,6 +36,8 @@ export class GlassRecorder extends EventTarget {
     this.canvas.addEventListener('webglcontextlost', event => { event.preventDefault(); this.gl = null; this.root.classList.add('fallback'); }, { signal });
     this.canvas.addEventListener('webglcontextrestored', () => { if (!this.destroyed) { this.setupGL(); this.setBackdrop(this.backdrop); } }, { signal });
     this.options = { radius:56, idleWidth:168, recordingWidth:340, maxScale:1.25 };
+    this.palette = { skyTop:'#243d6b', skyBottom:'#060c1a', glassTint:'#071c43' };
+    this.applyAppearance(sizing);
     this.applySizing(sizing);
     this.setupGL(); this.resizeObserver = new ResizeObserver(() => this.resize()); this.resizeObserver.observe(this.root); this.resize();
     this.setBackdrop(backdrop); this.lastFrame = performance.now(); this.frame = this.frame.bind(this); this.raf = requestAnimationFrame(this.frame);
@@ -49,7 +51,7 @@ export class GlassRecorder extends EventTarget {
   }
   setupGL() {
     try {
-      const gl = this.canvas.getContext('webgl2', { alpha: this.transparent, premultipliedAlpha: false, antialias: false, preserveDrawingBuffer: true });
+      const gl = this.canvas.getContext('webgl2', { alpha: true, premultipliedAlpha: false, antialias: false, preserveDrawingBuffer: true });
       if (!gl) throw new Error('WebGL2 is unavailable');
       const compile = (type, source) => { const shader = gl.createShader(type); gl.shaderSource(shader, source); gl.compileShader(shader); if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) { const message = gl.getShaderInfoLog(shader); gl.deleteShader(shader); throw new Error(message); } return shader; };
       this.program = gl.createProgram(); const shaders = [compile(gl.VERTEX_SHADER, vertex), compile(gl.FRAGMENT_SHADER, fragment)];
@@ -60,7 +62,7 @@ export class GlassRecorder extends EventTarget {
       const position = gl.getAttribLocation(this.program, 'position'); gl.enableVertexAttribArray(position); gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
       this.texture = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, this.texture); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([37,51,76,255]));
-      this.uniforms = Object.fromEntries(['resolution','imageSize','center','pointer','radius','extension','time','volume','recording','transparent','bands[0]'].map(name => [name, gl.getUniformLocation(this.program, name)])); this.gl = gl; this.root.classList.remove('fallback');
+      this.uniforms = Object.fromEntries(['resolution','imageSize','center','pointer','radius','extension','time','volume','recording','transparent','skyTop','skyBottom','glassTint','bands[0]'].map(name => [name, gl.getUniformLocation(this.program, name)])); this.gl = gl; this.root.classList.remove('fallback');
     } catch (error) { this.gl = null; this.root.classList.add('fallback'); this.emit('rendererfallback', { message: error.message }); }
   }
   resize() {
@@ -74,10 +76,19 @@ export class GlassRecorder extends EventTarget {
     this.options.recordingWidth = Math.min(700, Math.max(this.options.idleWidth, this.options.recordingWidth));
     this.options.maxScale = Math.min(2, Math.max(.25, this.options.maxScale));
   }
+  applyAppearance(patch) {
+    const palette = { ...this.palette };
+    for (const key of ['skyTop','skyBottom','glassTint']) if (key in patch) { parseColor(patch[key]); palette[key] = patch[key]; }
+    this.palette = palette; this.colors = Object.fromEntries(Object.entries(palette).map(([key,value])=>[key,parseColor(value)]));
+    this.root.style.setProperty('--og-top', palette.skyTop); this.root.style.setProperty('--og-bottom', palette.skyBottom);
+  }
+  getConfiguration() { return { ...this.options, ...this.palette, transparent:this.transparent, reducedMotion:this.reducedMotion }; }
   configure(patch = {}) {
     if (this.destroyed) return;
-    this.applySizing(patch); this.resize();
-    this.emit('configurationchange', { ...this.options });
+    this.applyAppearance(patch); this.applySizing(patch);
+    if (typeof patch.transparent === 'boolean') { this.transparent=patch.transparent; this.root.classList.toggle('transparent',this.transparent); this.root.style.backgroundImage=this.transparent||!this.backdrop?'':`url(${JSON.stringify(this.backdrop)})`; }
+    if (typeof patch.reducedMotion === 'boolean') this.reducedMotion=patch.reducedMotion;
+    this.resize(); this.emit('configurationchange', this.getConfiguration());
   }
   async setBackdrop(url) {
     if (this.destroyed) return false;
@@ -147,7 +158,7 @@ export class GlassRecorder extends EventTarget {
     this.clock.textContent = formatTime(active ? (now - this.startedAt) / 1000 : 0);
     const gl = this.gl; if (!gl) return; const u = this.uniforms;
     gl.viewport(0, 0, this.canvas.width, this.canvas.height); gl.useProgram(this.program); gl.uniform2f(u.resolution, this.canvas.width, this.canvas.height); gl.uniform2f(u.imageSize, ...this.imageSize); gl.uniform2f(u.center, this.canvas.width / 2, this.canvas.height / 2);
-    gl.uniform2f(u.pointer, ...this.pointer.map(v => this.reducedMotion ? 1e5 : v * this.dpr)); gl.uniform1f(u.radius, r * this.dpr); gl.uniform1f(u.extension, extension * this.dpr); gl.uniform1f(u.time, this.reducedMotion ? 0 : now / 1000); gl.uniform1f(u.volume, this.level); gl.uniform1f(u.recording, active); gl.uniform1f(u.transparent, this.transparent ? 1 : 0); gl.uniform1fv(u['bands[0]'], this.bandLevels); gl.drawArrays(gl.TRIANGLES, 0, 3);
+    gl.uniform2f(u.pointer, ...this.pointer.map(v => this.reducedMotion ? 1e5 : v * this.dpr)); gl.uniform1f(u.radius, r * this.dpr); gl.uniform1f(u.extension, extension * this.dpr); gl.uniform1f(u.time, this.reducedMotion ? 0 : now / 1000); gl.uniform1f(u.volume, this.level); gl.uniform1f(u.recording, active); gl.uniform1f(u.transparent, this.transparent ? 1 : 0); for (const key of ['skyTop','skyBottom','glassTint']) gl.uniform3fv(u[key],this.colors[key]); gl.uniform1fv(u['bands[0]'], this.bandLevels); gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
   destroy() {
     if (this.destroyed) return; this.destroyed = true; this.token++; this.imageToken++; cancelAnimationFrame(this.raf); this.events.abort(); this.resizeObserver.disconnect();

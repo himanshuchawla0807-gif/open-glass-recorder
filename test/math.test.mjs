@@ -15,3 +15,7 @@ test('largest state fits a small host and spring overshoot cannot shrink or exce
  const {fitGeometry}=await import('../src/math.js');const idle=fitGeometry(260,120,{},0),active=fitGeometry(260,120,{},1);
  assert.ok(active.bodyWidth<=236);assert.ok(active.buttonDiameter<=96);assert.deepEqual(fitGeometry(260,120,{},-1),idle);assert.deepEqual(fitGeometry(260,120,{},2),active);
 });
+
+test('color parsing accepts safe RGB hex values and rejects CSS expressions',async()=>{
+ const {parseColor}=await import('../src/math.js');assert.deepEqual(parseColor('#00ffFF'),[0,1,1]);for(const value of ['red','#fff','url(x)',null,4])assert.throws(()=>parseColor(value),TypeError);
+});

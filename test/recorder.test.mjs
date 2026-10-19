@@ -2,7 +2,7 @@ import test, { beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 import { GlassRecorder } from '../src/recorder.js';
 class ElementStub extends EventTarget {
- constructor(){super();this.style={};this.children=[];this.attributes={};const c=new Set();this.classList={add:v=>c.add(v),remove:v=>c.delete(v),contains:v=>c.has(v)}}
+ constructor(){super();this.style={setProperty(k,v){this[k]=v}};this.children=[];this.attributes={};const c=new Set();this.classList={add:v=>c.add(v),remove:v=>c.delete(v),contains:v=>c.has(v),toggle:(v,on)=>on?c.add(v):c.delete(v)}}
  append(...nodes){this.children.push(...nodes)} setAttribute(k,v){this.attributes[k]=v}
  getBoundingClientRect(){return {width:440,height:220,left:0,top:0}} getContext(){return null} remove(){this.removed=true}
 }
@@ -45,4 +45,8 @@ test('late resume from canceled audio context cannot close the new session',asyn
 test('configuration validates geometry and keeps a fixed scale across states',()=>{
  const r=new GlassRecorder(new ElementStub(),{radius:64,idleWidth:200,recordingWidth:360});const initial=r.scale;
  r.setState('recording');r.resize();assert.equal(r.scale,initial);r.configure({radius:-5,idleWidth:NaN,recordingWidth:12,maxScale:10});assert.equal(r.options.radius,24);assert.ok(r.options.recordingWidth>=r.options.idleWidth);assert.equal(r.options.maxScale,2);r.destroy();
+});
+
+test('public appearance changes are validated and can toggle transparent mode',()=>{
+ const r=new GlassRecorder(new ElementStub());r.configure({skyTop:'#113355',glassTint:'#05122f',transparent:true});assert.equal(r.getConfiguration().skyTop,'#113355');assert.equal(r.root.classList.contains('transparent'),true);assert.throws(()=>r.configure({glassTint:'url(bad)'}),TypeError);assert.equal(r.getConfiguration().glassTint,'#05122f');r.destroy();
 });
