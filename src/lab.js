@@ -1,3 +1,4 @@
+import { handlePageHide } from './lifecycle.js';
 import { GlassRecorder } from './recorder.js';
 export const presets = [
  {name:'Midnight wide',options:{idleWidth:210,recordingWidth:340,radius:56,skyTop:'#254a7e',skyBottom:'#060e23',glassTint:'#102d5b'}},
@@ -17,4 +18,4 @@ export const variants=presets.map((preset,index)=>{
  return {card,host,status,recorder};
 });
 window.glassLab=variants;
-window.addEventListener('pagehide',event=>{for(const {recorder}of variants){if(event.persisted)recorder.stop();else recorder.destroy()}for(const url of urls)URL.revokeObjectURL(url);urls.clear();});
+window.addEventListener('pagehide',event=>handlePageHide(event,variants.map(v=>v.recorder),urls));

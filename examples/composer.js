@@ -1,3 +1,4 @@
+import { handlePageHide } from '../src/lifecycle.js';
 import { GlassRecorder } from '../src/recorder.js';
 const recorder=new GlassRecorder(document.querySelector('#recorder'),{transparent:true,radius:56,idleWidth:210,recordingWidth:330,maxScale:.9,skyTop:'#234674',skyBottom:'#070f24',glassTint:'#0c2853'});
 const urls=new Set();
@@ -7,4 +8,4 @@ recorder.addEventListener('statechange',e=>document.querySelector('#status').tex
 recorder.addEventListener('error',e=>document.querySelector('#status').textContent=e.detail.message);
 recorder.addEventListener('recording',e=>{if(!e.detail.blob.size)return;const url=URL.createObjectURL(e.detail.blob);urls.add(url);const audio=document.createElement('audio');audio.controls=true;audio.src=url;message('Voice note').append(audio);});
 window.inlineRecorder=recorder;
-window.addEventListener('pagehide',event=>{if(event.persisted)recorder.stop();else recorder.destroy();for(const url of urls)URL.revokeObjectURL(url)});
+window.addEventListener('pagehide',event=>handlePageHide(event,[recorder],urls));
