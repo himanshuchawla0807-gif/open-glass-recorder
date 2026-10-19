@@ -22,3 +22,6 @@ SOFTWARE.
 
 Wallpaper images in assets/ and screenshots depicting them are excluded from
 this software license. See assets/NOTICE.md.
+
+Recovered third-party renderer files in vendor/reference-recorder/ are excluded
+from this license. See vendor/reference-recorder/NOTICE.md and THIRD_PARTY.md.

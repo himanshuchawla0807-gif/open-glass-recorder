@@ -20,4 +20,10 @@ CI runs the unit tests and syntax checks. Browser observations and limitations a
 
 Open `/test/browser.html` on the local server (or the deployed demo) and press **Run checks**. The harness creates its own 440 Hz tone; it never requests the physical microphone. It checks idle/requesting/recording diameter equality, expansion, audio output, resource release, transparent pixels, live configuration, denied permission and disposal. Ten checks passed in Chromium. `npm test` now runs 20 unit/lifecycle tests. `npm run check` syntax-checks all runtime, example, harness, test and check-script JavaScript files.
 
-The lab was also verified at 390×844 with no horizontal overflow. Changing its radius, tint and transparency applies through the public API. The inline chat's button stayed at 93.671875 px before and during capture, and measured 80.09375 px on mobile.
+The lab was also verified at 390×844 with no horizontal overflow. Changing its radius, tint and transparency applies through the public API. The earlier local chat integration of the independent component stayed at 93.671875 px before and during capture, and measured 80.09375 px on mobile. These measurements do not describe the restored reference-renderer chat.
+
+## Approved reference demo
+
+The default page and examples/chat/ use the recovered reference renderer. The existing 20 Node tests and test/browser.html apply to the separate independent component. Reference-demo verification uses synthetic oscillator input, actual start/stop buttons, playback, permission denial and responsive screenshots. No physical microphone input was recorded. See docs/restoration-verification.json.
+
+Open test/reference-browser.html and click Run checks to reproduce the reference renderer synthetic capture, playback, constant sizing, delayed-stop/restart, late-permission cancellation and denial checks.

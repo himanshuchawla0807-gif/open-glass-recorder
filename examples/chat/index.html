@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Still — A space to think</title><meta name="description" content="A quiet conversation workspace with a liquid glass voice recorder."><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css"></head>
+<body>
+<aside class="sidebar" id="sidebar">
+ <a class="brand" href="./" aria-label="Still home"><span class="brand-mark">s</span>still<span class="brand-dot">•</span></a>
+ <button class="new-chat" id="new-chat"><span>＋</span> New conversation <kbd>⌘ K</kbd></button>
+ <div class="nav-label">YOUR SPACE</div>
+ <button class="nav-item selected" id="conversations"><span>◌</span> Conversations <span class="nav-count" id="chat-count">1</span></button>
+ <div class="history-heading">RECENT <span>↙</span></div><div class="history" id="history"></div>
+ <div class="sidebar-bottom"><div class="local-note"><span class="online-dot"></span> A little room to think.<p>Your text stays in this browser.</p></div><div class="profile"><span class="avatar">H</span><div>My workspace<small>Personal space</small></div><span class="profile-dot">•••</span></div></div>
+</aside>
+<main>
+ <header><div class="breadcrumb"><button class="mobile-menu" id="menu" aria-label="Toggle sidebar">☰</button><span>Personal space</span><span class="slash">/</span><b id="page-title">New conversation</b></div><span class="demo-badge"><span></span> Local demo</span></header>
+ <section class="conversation" id="conversation" aria-label="Conversation">
+  <div class="welcome" id="welcome"><div class="welcome-symbol" aria-hidden="true"><span>✳</span></div><div class="eyebrow">MAKE SPACE FOR A GOOD IDEA</div><h1>A clearer head<br>starts here.</h1><p>A half-formed thought. A question. A big, messy idea.<br>Bring it here. We’ll find a way forward.</p>
+   <div class="suggestions"><button data-prompt="Help me untangle an idea"><span>↗</span><b>Untangle an idea</b><small>Make sense of the messy middle</small></button><button data-prompt="Help me plan my day"><span>☷</span><b>Make a little plan</b><small>Find your next small step</small></button><button data-prompt="Give me a creative starting point"><span>✧</span><b>Find a fresh angle</b><small>Start somewhere unexpected</small></button></div>
+  </div><div class="messages" id="messages" aria-live="polite"></div>
+ </section>
+ <section class="composer-area" aria-label="Message composer"><div class="voice-intro"><span class="spark">✦</span> Sometimes, it’s easier to say it.<span class="intro-line"></span></div>
+ <div class="composer-grid"><form class="text-composer" id="message-form"><label class="sr-only" for="message">Your message</label><textarea id="message" placeholder="What’s on your mind?" rows="2" maxlength="10000"></textarea><div class="composer-bottom"><span><span class="text-icon">T</span> Think out loud, or type it out</span><div class="composer-actions"><div class="inline-recorder"><div id="recorder"></div><span class="sr-only" id="voice-label">Tap to talk</span></div><button class="send" id="send" aria-label="Send message" type="submit">↑</button></div></div></form></div>
+ <div class="composer-foot"><span id="status" role="status">Demo replies · Voice recordings stay in this tab</span><span><kbd>↵</kbd> to send <span class="foot-separator">·</span> <kbd>shift ↵</kbd> for a new line</span></div></section>
+</main>
+<script type="module" src="app.js"></script></body></html>
