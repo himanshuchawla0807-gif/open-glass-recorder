@@ -11,11 +11,11 @@
 
 **Idle**
 
-<img src="docs/screenshots/recorder-idle.png" alt="Idle glass microphone over the blue nebula background" width="760">
+<img src="docs/screenshots/blue-nebula-recorder-idle.png" alt="Idle glass microphone over the blue nebula background" width="760">
 
 **Recording — audio-reactive color**
 
-<img src="docs/screenshots/recorder-speaking.png" alt="Active glass recorder with colorful audio-reactive glow over the blue nebula background" width="760">
+<img src="docs/screenshots/blue-nebula-recorder-speaking.png" alt="Active glass recorder with colorful audio-reactive glow over the blue nebula background" width="760">
 
 Both states use the same scale and Blue Nebula background, with a smaller presentation and more space around the component.
 
