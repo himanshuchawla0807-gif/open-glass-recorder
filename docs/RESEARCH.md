@@ -4,14 +4,14 @@ The independent implementation findings below apply to src/recorder.js and its l
 
 # REA-assisted investigation and independent implementation
 
-The starting reference was the public Liquid Glass Recorder page from Whitespace. Himanshu reported discovering it on Twitter/X. The original page advertised a paid component. The goal of this repository is a free open-source implementation of the interaction, not republication of that paid build.
+The starting reference was the public Liquid Glass Recorder page from Whitespace. Himanshu reported discovering it on Twitter/X. The original page advertised a paid component. The initial goal was a free open-source implementation of the interaction. That independent implementation remains available; version 0.0.1.2 also includes the recovered reference renderer under the separate rights notice described above.
 
 ## What happened
 
 1. REA statically inspected the public JavaScript downloaded for a local investigation.
 2. Playwright observed browser layout, recording controls and visuals. That earlier local recovery preserved deployed code for inspection.
-3. For this public repository, new JavaScript, shaders and UI were authored with Codex. None of the recovered bundles or their extracted source files are included.
-4. Browser checks exercise this new implementation separately. The demo uses owner-supplied wallpapers instead of reference-site imagery.
+3. New JavaScript, shaders and UI were authored with Codex for the independent implementation. Version 0.0.1.2 also includes recovered source under `vendor/reference-recorder/`, excluded from the MIT license.
+4. Browser checks exercise the independent implementation separately from the restored reference renderer. Both demos use owner-supplied wallpapers instead of reference-site imagery.
 
 This is independent rewriting after inspection, not a claim of a legally audited clean-room process. It is not the original source repository and is not endorsed by the original creator.
 
