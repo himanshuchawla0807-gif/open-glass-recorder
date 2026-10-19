@@ -1,4 +1,4 @@
-import { advanceSpring, formatTime, recordingError } from './math.js';
+import { advanceSpring, formatTime, recordingError, fitGeometry } from './math.js';
 import { vertex, fragment } from './shaders.js';
 
 const styles = `
@@ -16,7 +16,7 @@ const stop = '<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="8" y="8" widt
 
 /** Dependency-free recorder. Emits statechange, recording, error and backdropchange. */
 export class GlassRecorder extends EventTarget {
-  constructor(host, { backdrop = '', transparent = false, reducedMotion } = {}) {
+  constructor(host, { backdrop = '', transparent = false, reducedMotion, ...sizing } = {}) {
     super();
     if (!(host instanceof Element)) throw new TypeError('GlassRecorder needs a host element.');
     if (!document.getElementById('open-glass-styles')) {
@@ -35,6 +35,8 @@ export class GlassRecorder extends EventTarget {
     this.root.addEventListener('pointerleave', () => { this.pointer = [1e5, 1e5]; }, { signal });
     this.canvas.addEventListener('webglcontextlost', event => { event.preventDefault(); this.gl = null; this.root.classList.add('fallback'); }, { signal });
     this.canvas.addEventListener('webglcontextrestored', () => { if (!this.destroyed) { this.setupGL(); this.setBackdrop(this.backdrop); } }, { signal });
+    this.options = { radius:56, idleWidth:168, recordingWidth:340, maxScale:1.25 };
+    this.applySizing(sizing);
     this.setupGL(); this.resizeObserver = new ResizeObserver(() => this.resize()); this.resizeObserver.observe(this.root); this.resize();
     this.setBackdrop(backdrop); this.lastFrame = performance.now(); this.frame = this.frame.bind(this); this.raf = requestAnimationFrame(this.frame);
   }
@@ -63,7 +65,19 @@ export class GlassRecorder extends EventTarget {
   }
   resize() {
     const box = this.root.getBoundingClientRect(); this.width = Math.max(1, box.width); this.height = Math.max(1, box.height); this.dpr = Math.min(devicePixelRatio || 1, 2);
-    this.canvas.width = Math.round(this.width * this.dpr); this.canvas.height = Math.round(this.height * this.dpr); this.scale = Math.min(1.25, Math.max(.45, Math.min(this.width / 440, this.height / 220)));
+    this.canvas.width = Math.round(this.width * this.dpr); this.canvas.height = Math.round(this.height * this.dpr); this.scale = fitGeometry(this.width, this.height, this.options).scale;
+  }
+  applySizing(patch) {
+    for (const key of ['radius','idleWidth','recordingWidth','maxScale']) if (Number.isFinite(patch[key])) this.options[key] = patch[key];
+    this.options.radius = Math.min(100, Math.max(24, this.options.radius));
+    this.options.idleWidth = Math.min(600, Math.max(this.options.radius * 2, this.options.idleWidth));
+    this.options.recordingWidth = Math.min(700, Math.max(this.options.idleWidth, this.options.recordingWidth));
+    this.options.maxScale = Math.min(2, Math.max(.25, this.options.maxScale));
+  }
+  configure(patch = {}) {
+    if (this.destroyed) return;
+    this.applySizing(patch); this.resize();
+    this.emit('configurationchange', { ...this.options });
   }
   async setBackdrop(url) {
     if (this.destroyed) return false;
@@ -127,8 +141,9 @@ export class GlassRecorder extends EventTarget {
     if (this.reducedMotion) { this.amount = active; this.velocity = 0; } else [this.amount, this.velocity] = advanceSpring(this.amount, this.velocity, active, dt);
     this.level = 0; this.bandLevels.fill(0);
     if (this.analyser) { this.analyser.getByteFrequencyData(this.samples); const size = this.samples.length; for (let i=0;i<size;i++) { const band = Math.min(3, Math.floor(i / size * 4)); this.bandLevels[band] += this.samples[i] / (255 * size / 4); } this.level = this.bandLevels.reduce((a,b)=>a+b,0) / 4; }
-    const r = 56 * this.scale, extension = 94 * this.scale * this.amount;
-    this.button.style.width = this.button.style.height = `${r * 2}px`; this.button.style.left = `${this.width / 2 + extension}px`; this.clock.style.left = `${this.width / 2 - extension * .42}px`; this.clock.style.opacity = Math.max(0, this.amount * 2 - 1); this.clock.style.fontSize = `${24 * this.scale}px`;
+    const geometry = fitGeometry(this.width, this.height, this.options, this.amount);
+    const r = geometry.radius, extension = geometry.extension;
+    this.button.style.width = this.button.style.height = `${r * 2}px`; this.button.style.left = `${this.width / 2 + geometry.buttonOffset}px`; this.clock.style.left = `${this.width / 2 - geometry.buttonOffset * .42}px`; this.clock.style.opacity = Math.max(0, this.amount * 2 - 1); this.clock.style.fontSize = `${24 * this.scale}px`;
     this.clock.textContent = formatTime(active ? (now - this.startedAt) / 1000 : 0);
     const gl = this.gl; if (!gl) return; const u = this.uniforms;
     gl.viewport(0, 0, this.canvas.width, this.canvas.height); gl.useProgram(this.program); gl.uniform2f(u.resolution, this.canvas.width, this.canvas.height); gl.uniform2f(u.imageSize, ...this.imageSize); gl.uniform2f(u.center, this.canvas.width / 2, this.canvas.height / 2);

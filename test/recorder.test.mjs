@@ -41,3 +41,8 @@ test('late resume from canceled audio context cannot close the new session',asyn
  const r=new GlassRecorder(new ElementStub());const first=r.start();await Promise.resolve();assert.equal(typeof resumeFirst,'function');r.stop();await r.start();const context=r.context,currentStream=r.stream;
  resumeFirst();await first;assert.equal(r.state,'recording');assert.equal(r.context,context);assert.equal(r.stream,currentStream);assert.notEqual(context.closed,true);r.destroy();
 });
+
+test('configuration validates geometry and keeps a fixed scale across states',()=>{
+ const r=new GlassRecorder(new ElementStub(),{radius:64,idleWidth:200,recordingWidth:360});const initial=r.scale;
+ r.setState('recording');r.resize();assert.equal(r.scale,initial);r.configure({radius:-5,idleWidth:NaN,recordingWidth:12,maxScale:10});assert.equal(r.options.radius,24);assert.ok(r.options.recordingWidth>=r.options.idleWidth);assert.equal(r.options.maxScale,2);r.destroy();
+});
