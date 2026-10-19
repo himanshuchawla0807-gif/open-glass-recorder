@@ -7,21 +7,17 @@
 
 [Approved demo](https://himanshuchawla0807-gif.github.io/open-glass-recorder/) · [Chat example](https://himanshuchawla0807-gif.github.io/open-glass-recorder/examples/chat/) · [Independent demo](https://himanshuchawla0807-gif.github.io/open-glass-recorder/independent.html)
 
-## Wallpaper gallery
+## Recorder states
 
-The approved recorder with three wallpaper backgrounds from the live demo.
+**Idle**
 
-**Blue Nebula**
+![Idle glass microphone, with no surrounding background](docs/screenshots/recorder-idle.png)
 
-![Approved glass recorder with Blue Nebula wallpaper](docs/screenshots/approved-demo.png)
+**Recording — audio-reactive color**
 
-**Cosmic Cliffs**
+![Active glass recorder with timer and colorful audio-reactive glow](docs/screenshots/recorder-speaking.png)
 
-![Approved glass recorder with Cosmic Cliffs wallpaper](docs/screenshots/approved-cosmic-cliffs.png)
-
-**Europa**
-
-![Approved glass recorder with Europa wallpaper](docs/screenshots/approved-europa.png)
+Both captures use the same scale and transparent background.
 
 ## Why I built this
 

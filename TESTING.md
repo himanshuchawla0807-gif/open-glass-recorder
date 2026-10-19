@@ -27,3 +27,5 @@ The lab was also verified at 390×844 with no horizontal overflow. Changing its 
 The default page and examples/chat/ use the recovered reference renderer. The existing 20 Node tests and test/browser.html apply to the separate independent component. Reference-demo verification uses synthetic oscillator input, actual start/stop buttons, playback, permission denial and responsive screenshots. No physical microphone input was recorded. See docs/restoration-verification.json.
 
 Open test/reference-browser.html and click Run checks to reproduce the reference renderer synthetic capture, playback, constant sizing, delayed-stop/restart, late-permission cancellation and denial checks.
+
+README state captures use the restored renderer at scale 2.5 in the same 900×300 transparent viewport. The idle and recording click targets both measured 205 CSS pixels. The recording glow was driven by a synthetic multi-frequency signal; no physical microphone audio was used.
