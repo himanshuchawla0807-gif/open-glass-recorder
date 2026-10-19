@@ -28,4 +28,4 @@ The default page and examples/chat/ use the recovered reference renderer. The ex
 
 Open test/reference-browser.html and click Run checks to reproduce the reference renderer synthetic capture, playback, constant sizing, delayed-stop/restart, late-permission cancellation and denial checks.
 
-README state captures use the restored renderer at scale 2.5 in the same 900×300 transparent viewport. The idle and recording click targets both measured 205 CSS pixels. The recording glow was driven by a synthetic multi-frequency signal; no physical microphone audio was used.
+README state captures use the restored renderer at scale 2.5 in the same 1200×520 viewport with Blue Nebula background and pixelRatio 2. README images display at 760px wide. The idle and recording click targets both measured 205 CSS pixels. The recording glow was driven by a synthetic multi-frequency signal; no physical microphone audio was used.
