@@ -5,9 +5,23 @@
 - **Approved reference demo**: restores the earlier recovered rendering engine, circular glass surround, raised inner lens, pointer deformation and audio-reactive recording animation. The recovered engine has separate third-party rights; see [THIRD_PARTY.md](THIRD_PARTY.md).
 - **Independent MIT component**: the freshly written vanilla JavaScript/WebGL2 implementation remains available in `src/recorder.js`, the independent demo, lab and minimal composer example.
 
-[Approved demo](https://himanshuchawla0807-gif.github.io/open-glass-recorder/) · [Chat example](https://himanshuchawla0807-gif.github.io/open-glass-recorder/examples/chat/) · [Independent demo](https://himanshuchawla0807-gif.github.io/open-glass-recorder/independent.html) · [Component lab](https://himanshuchawla0807-gif.github.io/open-glass-recorder/lab.html)
+[Approved demo](https://himanshuchawla0807-gif.github.io/open-glass-recorder/) · [Chat example](https://himanshuchawla0807-gif.github.io/open-glass-recorder/examples/chat/) · [Independent demo](https://himanshuchawla0807-gif.github.io/open-glass-recorder/independent.html)
 
-![Approved glass recorder over a blue nebula](docs/screenshots/approved-demo.png)
+## Wallpaper gallery
+
+The approved recorder with three wallpaper backgrounds from the live demo.
+
+**Blue Nebula**
+
+![Approved glass recorder with Blue Nebula wallpaper](docs/screenshots/approved-demo.png)
+
+**Cosmic Cliffs**
+
+![Approved glass recorder with Cosmic Cliffs wallpaper](docs/screenshots/approved-cosmic-cliffs.png)
+
+**Europa**
+
+![Approved glass recorder with Europa wallpaper](docs/screenshots/approved-europa.png)
 
 ## Why I built this
 
@@ -24,10 +38,6 @@ The default demo restores the circular outer glass and raised mic lens. Recordin
 The chat example embeds the same reference renderer directly into its composer with a navy gradient sampled inside the glass and transparency outside it. Chat replies are local, rule-based placeholders; there is no AI service, transcription or audio upload. Text history persists in browser storage. Audio lives only in the tab.
 
 The full reference-renderer demo is source-available with **unverified application-specific reuse rights**, not an entirely MIT/open-source component. See [license boundaries](THIRD_PARTY.md). For MIT-licensed reusable code, use the independent implementation below.
-
-## Independent component variants
-
-The independent lab has three functional variants and live width, radius, gradient, tint, transparency and motion controls. Copy its configuration for use with `GlassRecorder`. Run `npm run lab` to serve it at http://localhost:8768.
 
 ## Run locally
 
