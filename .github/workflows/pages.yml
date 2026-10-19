@@ -20,10 +20,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
       - run: |
-          mkdir -p public/src public/assets
-          cp index.html style.css icon.svg public/
+          mkdir -p public/src public/assets public/examples public/test
+          cp index.html style.css icon.svg lab.html lab.css public/
           cp src/*.js public/src/
           cp assets/*.jpg public/assets/
+          cp examples/*.html examples/*.js public/examples/
+          cp test/browser.html test/browser.js public/test/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: public

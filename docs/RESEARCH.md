@@ -35,4 +35,8 @@ References for browser APIs:
 
 ## Public source inspection
 
-REA also inspected the four newly written modules in `src/`. Summary evidence `ev_37c5d4b0f232b5c2e0bc78e0f0dc782153e04f5ed6a2508b9ad28a9fafbaa8e3` reports four parsed JavaScript files, 21,588 bytes read and zero parse failures. Application inventory coverage is complete; semantic coverage remains unknown with 897 conservative unknowns. See [the sanitized summary](rea-source-summary.json). This is a syntax/inventory observation, not formal verification of originality, licensing or complete runtime behavior.
+REA inspected the current seven runtime modules in `src/` on 19 October 2026. Summary evidence `ev_083a0fa1fbedf608f0e14577ad6db8b9194823f29559959eae4383a2e3e2b1ea` reports 32,217 source bytes, seven parsed files and zero parse failures. Application inventory coverage is complete; conservative semantic unknowns remain. See [the sanitized summary](rea-source-update.json). This is a syntax/inventory observation, not formal verification of originality, licensing or complete runtime behavior.
+
+## Fixed-size component update
+
+The old recovered integration changed its action radius from 41 to 26.5 during recording. The independent implementation keeps radius and scale independent of capture state. Only capsule width and the horizontal button position interpolate. Browser checks measured 93.671875 CSS pixels both before and during recording in the local chat integration; mobile measured 80.09375 pixels.

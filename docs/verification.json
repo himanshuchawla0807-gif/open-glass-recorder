@@ -1,6 +1,6 @@
 {
-  "date": "2026-10-18",
-  "unitTests": 13,
+  "date": "2026-10-19",
+  "unitTests": 20,
   "syntaxChecks": "passed",
   "browser": "Chromium via Playwright CLI",
   "renderer": {
@@ -35,5 +35,17 @@
     "No physical microphone was tested",
     "No all-browser or all-device equivalence claim",
     "Full branch coverage is not measured"
-  ]
+  ],
+  "browserRegressionChecksPassed": 10,
+  "chatDiameterIdle": 93.671875,
+  "chatDiameterRecording": 93.671875,
+  "chatMobileDiameter": 80.09375,
+  "chatMobileHorizontalOverflow": false,
+  "labMobileHorizontalOverflow": false,
+  "liveConfiguration": {
+    "radius": 70,
+    "glassTint": "#661144",
+    "transparent": true
+  },
+  "originalPaidBundleRequestsInChat": false
 }

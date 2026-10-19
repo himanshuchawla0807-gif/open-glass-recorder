@@ -2,7 +2,7 @@
 
 **Voice, in orbit.** An independently written liquid-glass voice recorder in vanilla JavaScript and WebGL2. No framework, package installation, cloud service or API key required.
 
-[Try the demo](https://himanshuchawla0807-gif.github.io/open-glass-recorder/) · [How it was built](docs/RESEARCH.md) · [Component API](#use-the-component)
+[Component lab](https://himanshuchawla0807-gif.github.io/open-glass-recorder/lab.html) · [Inline example](https://himanshuchawla0807-gif.github.io/open-glass-recorder/examples/composer.html) · [Try the demo](https://himanshuchawla0807-gif.github.io/open-glass-recorder/) · [How it was built](docs/RESEARCH.md) · [Component API](#use-the-component)
 
 ![Open Glass over a blue nebula](docs/screenshots/desktop-blue-nebula.png)
 
@@ -16,7 +16,7 @@ Inspiration: [Whitespace's Liquid Glass Recorder](https://experiments.thisiswhit
 
 ## What it does
 
-- A refractive glass button stretches into a pill while recording.
+- A wider refractive glass pill expands while recording, keeping its button diameter fixed.
 - Spring motion, pointer attraction, chromatic fringes and microphone-reactive color.
 - Actual microphone capture, local playback and downloadable audio files.
 - Three landscape wallpapers supplied from my wallpaper collection.
@@ -24,6 +24,12 @@ Inspiration: [Whitespace's Liquid Glass Recorder](https://experiments.thisiswhit
 - Microphone tracks stop after recording; audio is never uploaded by this demo.
 
 Voice notes live in the current tab. Download anything you want to keep before closing it.
+
+## Component variants
+
+![Component lab](docs/screenshots/component-lab.png)
+
+The lab has three functional variants plus live width, radius, gradient, tint, transparency and motion controls. Copy the configuration and use it in another view. Run `npm run lab` to serve it separately at http://localhost:8768. The main demo remains at http://localhost:8765.
 
 ## Run locally
 
@@ -48,7 +54,13 @@ Microphone capture requires HTTPS or localhost and a browser that supports Media
 
   const recorder = new GlassRecorder(document.querySelector('#voice'), {
     backdrop: './assets/blue-nebula.jpg',
-    transparent: true
+    transparent: true,
+    idleWidth: 210,
+    recordingWidth: 330,
+    radius: 56,
+    skyTop: '#234674',
+    skyBottom: '#070f24',
+    glassTint: '#0c2853'
   });
 
   recorder.addEventListener('recording', ({ detail }) => {
@@ -64,6 +76,22 @@ Microphone capture requires HTTPS or localhost and a browser that supports Media
 </script>
 ```
 
+Call `recorder.configure({ idleWidth: 240, glassTint: '#392455' })` to change a variant live. `getConfiguration()` returns the normalized settings. Invalid colors throw a `TypeError`; numeric sizes are clamped to safe bounds.
+
+| Option | Default | Meaning |
+|---|---|---|
+| `radius` | 56 | Button radius before responsive fitting |
+| `idleWidth` | 168 | Resting pill width |
+| `recordingWidth` | 340 | Expanded pill width |
+| `maxScale` | 1.25 | Maximum scale in the host |
+| `skyTop` | `#243d6b` | Top color when no image is loaded |
+| `skyBottom` | `#060c1a` | Bottom gradient color |
+| `glassTint` | `#071c43` | Glass material tint |
+| `transparent` | false | Hide pixels outside the glass |
+| `reducedMotion` | system preference | Skip the spring transition |
+
+The component fits its largest state once. Starting, waiting for permission and recording do not recalculate a smaller button.
+
 `transparent: true` hides the canvas outside the glass shape. The supplied backdrop remains the optical sample inside the glass. The renderer does not capture or refract arbitrary live HTML behind it.
 
 | API | Purpose |
@@ -73,9 +101,11 @@ Microphone capture requires HTTPS or localhost and a browser that supports Media
 | `toggle()` | Start or stop |
 | `setBackdrop(url)` | Load a same-origin or CORS-enabled image |
 | `destroy()` | Release microphone, audio context, WebGL resources and listeners |
+| `configure(options)` | Update dimensions, colors and display options live |
+| `getConfiguration()` | Read the normalized configuration |
 | `state` | `idle`, `requesting`, `recording`, or `stopping` |
 
-Events: `statechange`, `recording`, `error`, `backdropchange`, `rendererfallback`.
+Events: `statechange`, `recording`, `error`, `backdropchange`, `rendererfallback`, `configurationchange`.
 
 ## Project structure
 
@@ -84,6 +114,10 @@ src/recorder.js   DOM, WebGL and recording lifecycle
 src/shaders.js    Original fullscreen optical shader
 src/math.js       Spring, timer and error helpers
 src/demo.js       Wallpaper selection, audio playback and downloads
+src/lab.js        Three working component variants
+src/lab-controls.js  Interactive inspector and config export
+src/lifecycle.js  Safe cleanup for cached/unloaded pages
+examples/        Inline composer integration
 assets/          User-supplied demo wallpapers, separately licensed
 ```
 
