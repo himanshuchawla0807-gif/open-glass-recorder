@@ -11,13 +11,13 @@
 
 **Idle**
 
-![Idle glass microphone, with no surrounding background](docs/screenshots/recorder-idle.png)
+<img src="docs/screenshots/recorder-idle.png" alt="Idle glass microphone over the blue nebula background" width="760">
 
 **Recording — audio-reactive color**
 
-![Active glass recorder with timer and colorful audio-reactive glow](docs/screenshots/recorder-speaking.png)
+<img src="docs/screenshots/recorder-speaking.png" alt="Active glass recorder with colorful audio-reactive glow over the blue nebula background" width="760">
 
-Both captures use the same scale and transparent background.
+Both states use the same scale and Blue Nebula background, with a smaller presentation and more space around the component.
 
 ## Why I built this
 
