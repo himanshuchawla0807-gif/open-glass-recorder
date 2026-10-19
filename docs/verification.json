@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-19",
+  "unitTests": 20,
+  "syntaxChecks": "passed",
+  "browser": "Chromium via Playwright CLI",
+  "renderer": {
+    "webgl2": true,
+    "textureSize": [
+      2048,
+      1366
+    ]
+  },
+  "wallpapers": "All three loaded and were screenshot-checked",
+  "permissionDenial": "Useful error shown; control returns to idle",
+  "audio": {
+    "syntheticSignalHz": 440,
+    "playbackTimeAdvancedSeconds": 0.162743,
+    "streamReleased": true,
+    "downloadFilename": "voice-note-1.webm"
+  },
+  "recordingsClear": "passed",
+  "mobile": {
+    "viewport": [
+      390,
+      844
+    ],
+    "horizontalOverflow": false,
+    "buttonWidth": 99.265625
+  },
+  "pendingPermissionDestroy": "Late stream tracks stopped",
+  "backdropClearing": "passed",
+  "javascriptErrors": [],
+  "physicalMicrophoneRecorded": false,
+  "limitations": [
+    "No physical microphone was tested",
+    "No all-browser or all-device equivalence claim",
+    "Full branch coverage is not measured"
+  ],
+  "browserRegressionChecksPassed": 10,
+  "chatDiameterIdle": 93.671875,
+  "chatDiameterRecording": 93.671875,
+  "chatMobileDiameter": 80.09375,
+  "chatMobileHorizontalOverflow": false,
+  "labMobileHorizontalOverflow": false,
+  "liveConfiguration": {
+    "radius": 70,
+    "glassTint": "#661144",
+    "transparent": true
+  },
+  "originalPaidBundleRequestsInChat": false
+}

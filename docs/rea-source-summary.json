@@ -1,0 +1,124 @@
+{
+  "evidence_id": "ev_37c5d4b0f232b5c2e0bc78e0f0dc782153e04f5ed6a2508b9ad28a9fafbaa8e3",
+  "parent_evidence_id": "ev_ed6c13031550848c82b04c2de037e9147b74ccf26f64d68c5e0ee36a6a4a14bb",
+  "scope": "The four independently written modules in src/.",
+  "statistics": {
+    "relevant_files": 4,
+    "nested_asar_containers": 0,
+    "text_bytes_read": 21588,
+    "invalid_utf8_files": 0,
+    "parsed_javascript_files": 4,
+    "visited_ast_nodes": 3585,
+    "findings": 17,
+    "modules": 0,
+    "parse_failures": 0
+  },
+  "coverage": {
+    "application": {
+      "status": "complete",
+      "truncated": false,
+      "omitted_count": 0,
+      "limits": []
+    },
+    "semantic": {
+      "status": "unknown",
+      "truncated": false,
+      "omitted_nodes": 0,
+      "omitted_relations": 0,
+      "limits": [],
+      "families": [
+        {
+          "family": "boundary",
+          "status": "partial",
+          "retained_relations": 5,
+          "omitted_relations": 0,
+          "unknown_count": 0
+        },
+        {
+          "family": "call-flow",
+          "status": "partial",
+          "retained_relations": 9,
+          "omitted_relations": 0,
+          "unknown_count": 259
+        },
+        {
+          "family": "child-process",
+          "status": "partial",
+          "retained_relations": 0,
+          "omitted_relations": 0,
+          "unknown_count": 0
+        },
+        {
+          "family": "closure",
+          "status": "partial",
+          "retained_relations": 47,
+          "omitted_relations": 0,
+          "unknown_count": 0
+        },
+        {
+          "family": "configuration",
+          "status": "partial",
+          "retained_relations": 0,
+          "omitted_relations": 0,
+          "unknown_count": 0
+        },
+        {
+          "family": "data-flow",
+          "status": "partial",
+          "retained_relations": 787,
+          "omitted_relations": 0,
+          "unknown_count": 102
+        },
+        {
+          "family": "event",
+          "status": "partial",
+          "retained_relations": 7,
+          "omitted_relations": 0,
+          "unknown_count": 0
+        },
+        {
+          "family": "object-flow",
+          "status": "partial",
+          "retained_relations": 185,
+          "omitted_relations": 0,
+          "unknown_count": 529
+        },
+        {
+          "family": "promise-ownership",
+          "status": "partial",
+          "retained_relations": 10,
+          "omitted_relations": 0,
+          "unknown_count": 7
+        },
+        {
+          "family": "request",
+          "status": "partial",
+          "retained_relations": 0,
+          "omitted_relations": 0,
+          "unknown_count": 0
+        },
+        {
+          "family": "resource-lifecycle",
+          "status": "partial",
+          "retained_relations": 0,
+          "omitted_relations": 0,
+          "unknown_count": 0
+        },
+        {
+          "family": "timer",
+          "status": "partial",
+          "retained_relations": 0,
+          "omitted_relations": 0,
+          "unknown_count": 0
+        }
+      ]
+    },
+    "application_unknowns": 0,
+    "semantic_unknowns": 897
+  },
+  "limitations": [
+    "Static syntax observations only; runtime behavior is verified separately.",
+    "Complete application inventory does not imply complete semantic understanding.",
+    "897 semantic unknowns remain; no formal originality or license certification is claimed."
+  ]
+}
